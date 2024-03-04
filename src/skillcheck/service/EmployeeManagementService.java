@@ -1,6 +1,5 @@
 package skillcheck.service;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,13 +8,13 @@ import java.util.List;
 import java.util.Objects;
 
 // FIXME Step-5-1:以下のクラスを全てimportしなさい。 
-// skillcheck.bean.EmployeeBean
-// skillcheck.bean.ResponseBean
-// skillcheck.constant.ConstMessage
-// skillcheck.constant.ConstSQL
-// skillcheck.dao.EmployeeDao
-// skillcheck.exception.MVCException
-// skillcheck.logger.Logger
+import skillcheck.bean.EmployeeBean;
+import skillcheck.bean.ResponseBean;
+import skillcheck.constant.ConstMessage;
+import skillcheck.constant.ConstSQL;
+import skillcheck.dao.EmployeeDao;
+import skillcheck.exception.MVCException;
+import skillcheck.logger.Logger;
 
 /**
  * 社員情報管理サービス
@@ -95,12 +94,13 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 // FIXME Step-5-4: SQLの抽出結果（resultSet）の各カラムデータを該当する社員情報Beanへセットしなさい。
                 // Tips: セット項目: 社員番号、パスワード、名前、メールアドレス、プログラミング言語、コメント
                 EmployeeBean employeeBean = new EmployeeBean(
-                        this.resultSet.getString("[ここへ記述]"),
-                        this.resultSet.getString("[ここへ記述]"),
-                        this.resultSet.getString("[ここへ記述]"),
-                        this.resultSet.getString("[ここへ記述]"),
-                        this.resultSet.getString("[ここへ記述]"),
-                        this.resultSet.getString("[ここへ記述]"));
+                this.resultSet.getString("emp_id"),
+                this.resultSet.getString("password"),
+                this.resultSet.getString("name"),
+                this.resultSet.getString("email"),
+                this.resultSet.getString("programming_language"),
+                this.resultSet.getString("comment"));
+
 
                 // 社員情報リストへ追加
                 empResultList.add(employeeBean);
@@ -182,8 +182,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                 // FIXME Step-5-3-1: pEmployeeBeanListの「1件目の要素のみ」から社員情報を取得しなさい。
                 // Tips1: ループ文を使用すること（正解は複数パターンあります）
             	// Tips2: 格納先はローカル変数のempとすること
-            	[ここへ記述]
-            	
+            	emp = pEmployeeBeanList.get(0);            	
                 if (Objects.nonNull(emp)) {
                     Logger.log(new Throwable(), "pEmployeeBeanList[0].empId = " + emp.getEmpId());
 
@@ -192,7 +191,7 @@ public final class EmployeeManagementService extends BaseService implements Empl
                     // FIXME Step-5-3-2: 以下の手順に沿って適当な処理を記述しなさい。
                     // Tips1：　上記で構築したSELECT文を引数にして、connectionよりプリペアードステートメントオブジェクトを作成
                     // Tips2: sbQueryは、sbQuery.toString()でStringへ型変換可能
-                    [ここへ記述]
+                    PreparedStatementt preparedStatement = this.connection.prepareStatement(sbQuery.toString());
                     
                     // LIKEを使用するため、パラメータを編集
                     final String empId = ExecuteCase.FIND_BY_EMPID_WITH_LIKE.equals(eCase)
@@ -201,10 +200,10 @@ public final class EmployeeManagementService extends BaseService implements Empl
 
                     // FIXME Step-5-3-3: preparedStatementに適切なパラメーターをセットしなさい。
                     // Tips: パラメータをセットするインデックスに注意
-                    this.preparedStatement.setString([ここへ記述], [ここへ記述]);
+                    this.preparedStatement.setString(1,empId);
 
                     // FIXME Step-5-3-4: preparedStatementよりSQL(SELECT文)を実行し、resultSetへ結果を格納しなさい。
-                    [ここへ記述]
+                    this.resultSet = preparedStatement.executeQuery();
 
                     Logger.log(new Throwable(), "SQL: " +  this.preparedStatement.toString());
                 }

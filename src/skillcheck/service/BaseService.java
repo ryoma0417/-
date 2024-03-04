@@ -55,15 +55,16 @@ public abstract class BaseService {
 
         try {
             // FIXME Step-5-2-1: postgresqlのドライバー名を記述しなさい。
+         
         	// Tips: ConstSQLより適切な定数を参照
-            Class.forName([ここへ記述]);
+            Class.forName(ConstSQL.JDBC_POSTGRES_DRIVER);
 
             // FIXME Step-5-2-2: DBへ接続するための初期設定を記述しなさい。
             // Tips: ConstSQLより適切な定数を参照
             this.connection = DriverManager.getConnection(
-            		[ここへ記述],
-            		[ここへ記述],
-            		[ここへ記述]);
+              ConstSQL.JDBC＿CONNECTION,
+            	ConstSQL.JDBC＿POSTGRES＿USER,
+            ConstSQL.JDBC_POSTGRES_PASS);
 
             // オートコミットOFF
             this.connection.setAutoCommit(false);

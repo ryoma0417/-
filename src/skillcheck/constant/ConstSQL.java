@@ -29,4 +29,6 @@ public final class ConstSQL {
 
     /** プリペアードステートメントで使用するクエリの条件値用プレースホルダー */
     public static final String CONST_PLACEHOLDER_FOR_BIND_PARAM = "?";
+    public static final String JDBC＿POSTGRES＿USER = null;
+    public static final String JDBC＿CONNECTION = null;
 }
